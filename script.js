@@ -1,47 +1,76 @@
 document.addEventListener("DOMContentLoaded",()=>{
 
+
+
 const header = document.getElementById("header");
 
 window.addEventListener("scroll",()=>{
 
 if(window.scrollY > 50){
-
 header.classList.add("scrolled");
-
 }else{
-
 header.classList.remove("scrolled");
-
 }
 
 });
 
-/* ANO FOOTER */
+
 
 document.getElementById("year").textContent =
 new Date().getFullYear();
 
-/* FADE IN */
+
+
+const text = "Olá, sou João Luiz";
+const element = document.getElementById("typing-title");
+
+let i = 0;
+
+function typing(){
+
+if(i < text.length){
+
+let char = text.charAt(i);
+
+if(text.substring(0,i+1).startsWith("Olá")){
+element.innerHTML =
+"<span class='ola'>" + text.substring(0,4) + "</span>" +
+text.substring(4,i+1) +
+"<span class='cursor'>|</span>";
+}else{
+element.innerHTML =
+text.substring(0,i+1) +
+"<span class='cursor'>|</span>";
+}
+
+i++;
+setTimeout(typing,80);
+
+}
+
+}
+
+typing();
+
+
 
 const observer = new IntersectionObserver(entries=>{
 
 entries.forEach(entry=>{
 
 if(entry.isIntersecting){
-
-entry.target.classList.add("visible");
-
+entry.target.classList.add("show");
 }
 
 });
 
 });
 
-document.querySelectorAll(".fade-in").forEach(el=>{
+document.querySelectorAll(".fade").forEach(el=>{
 observer.observe(el);
 });
 
-/* FUNDO DE PARTÍCULAS */
+/* FUNDO PARTÍCULAS */
 
 const bg = document.getElementById("interactive-bg");
 
