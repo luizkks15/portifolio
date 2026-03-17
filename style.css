@@ -1,6 +1,6 @@
 :root{
 
---bg:#18050c;
+--bg:#0f0b11;
 --text:#ffffff;
 --accent:#6833fa;
 --card:#111827;
@@ -28,7 +28,7 @@ overflow-x:hidden;
 
 }
 
-/* FUNDO */
+
 
 #interactive-bg{
 
@@ -41,7 +41,7 @@ z-index:-1;
 
 }
 
-/* HEADER */
+
 
 #header{
 
@@ -61,7 +61,7 @@ transition:0.4s;
 
 #header.scrolled{
 
-background:rgba(5,10,20,0.85);
+background:rgba(7, 7, 7, 0.85);
 backdrop-filter:blur(10px);
 
 }
@@ -95,7 +95,7 @@ color:var(--accent);
 
 }
 
-/* HERO */
+
 
 .hero{
 
@@ -112,7 +112,7 @@ max-width:700px;
 
 }
 
-/* DIGITAÇÃO */
+
 
 #typing-title{
 
@@ -129,7 +129,6 @@ font-size:72px;
 
 }
 
-/* cursor */
 
 .cursor{
 
@@ -158,7 +157,6 @@ margin-bottom:25px;
 
 }
 
-/* SOCIAL */
 
 .social-links{
 
@@ -182,7 +180,7 @@ transform:scale(1.2);
 
 }
 
-/* SECTIONS */
+
 
 .section{
 
@@ -225,7 +223,6 @@ transform:translateY(-10px) scale(1.03);
 
 }
 
-/* BOTÕES */
 
 .btn{
 
@@ -371,7 +368,7 @@ color:white;
 font-size:20px;
 
 }
-/* CURSOS */
+
 
 .courses-grid{
 
@@ -422,7 +419,7 @@ color:#cbd5e1;
 margin-bottom:15px;
 
 }
-/* IMAGEM DOS PROJETOS */
+
 
 .project-card{
 
@@ -476,4 +473,81 @@ gap:12px;
 
 flex-wrap:wrap;
 
+}
+
+
+
+#contato{
+display:flex;
+align-items:center;
+justify-content:center;
+text-align:center;
+}
+
+#contato .section-content{
+max-width:600px;
+}
+
+#contato p{
+color:#cbd5e1;
+margin-bottom:25px;
+font-size:18px;
+}
+
+.contact-box{
+background:rgba(255,255,255,0.03);
+border:1px solid rgba(255,255,255,0.06);
+padding:40px;
+border-radius:16px;
+backdrop-filter:blur(10px);
+display:flex;
+justify-content:center;
+margin-top:25px;
+transition:0.3s;
+}
+
+.contact-box:hover{
+transform:translateY(-6px);
+border-color:var(--accent);
+}
+
+.contact-box .btn-primary{
+font-size:16px;
+padding:14px 32px;
+border-radius:8px;
+}
+
+
+#curriculo{
+display:flex;
+align-items:center;
+justify-content:center;
+text-align:center;
+}
+
+#curriculo .section-content{
+max-width:700px;
+}
+
+#curriculo p{
+color:#cbd5e1;
+margin-bottom:25px;
+font-size:18px;
+}
+
+.curriculo-box{
+background:rgba(255,255,255,0.03);
+border:1px solid rgba(255,255,255,0.06);
+padding:40px;
+border-radius:16px;
+backdrop-filter:blur(10px);
+display:flex;
+justify-content:center;
+margin-top:25px;
+transition:0.3s;
+}
+
+.curriculo-box:hover{
+transform:translateY(-6px);
+border-color:var(--accent);
 }
