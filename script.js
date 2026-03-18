@@ -1,188 +1,180 @@
-document.addEventListener("DOMContentLoaded",()=>{
+document.addEventListener("DOMContentLoaded", () => {
 
+    const header = document.getElementById("header");
 
+    window.addEventListener("scroll", () => {
+        if (window.scrollY > 50) {
+            header.classList.add("scrolled");
+        } else {
+            header.classList.remove("scrolled");
+        }
+    });
 
-const header = document.getElementById("header");
+    document.getElementById("year").textContent =
+        new Date().getFullYear();
 
-window.addEventListener("scroll",()=>{
+    const menuToggle = document.querySelector(".menu-toggle");
+    const navMenu = document.querySelector("nav ul");
 
-if(window.scrollY > 50){
-header.classList.add("scrolled");
-}else{
-header.classList.remove("scrolled");
-}
+    menuToggle.addEventListener("click", () => {
+        navMenu.classList.toggle("active");
+    });
 
-});
+    const text = "Olá, sou João Luiz";
+    const element = document.getElementById("typing-title");
 
+    let i = 0;
 
+    function typing() {
 
-document.getElementById("year").textContent =
-new Date().getFullYear();
+        if (i < text.length) {
 
+            let char = text.charAt(i);
 
+            if (text.substring(0, i + 1).startsWith("Olá")) {
+                element.innerHTML =
+                    "<span class='ola'>" + text.substring(0, 4) + "</span>" +
+                    text.substring(4, i + 1) +
+                    "<span class='cursor'>|</span>";
+            } else {
+                element.innerHTML =
+                    text.substring(0, i + 1) +
+                    "<span class='cursor'>|</span>";
+            }
 
-const text = "Olá, sou João Luiz";
-const element = document.getElementById("typing-title");
+            i++;
+            setTimeout(typing, 80);
+        }
 
-let i = 0;
+    }
 
-function typing(){
+    typing();
 
-if(i < text.length){
+    const observer = new IntersectionObserver(entries => {
 
-let char = text.charAt(i);
+        entries.forEach(entry => {
 
-if(text.substring(0,i+1).startsWith("Olá")){
-element.innerHTML =
-"<span class='ola'>" + text.substring(0,4) + "</span>" +
-text.substring(4,i+1) +
-"<span class='cursor'>|</span>";
-}else{
-element.innerHTML =
-text.substring(0,i+1) +
-"<span class='cursor'>|</span>";
-}
+            if (entry.isIntersecting) {
+                entry.target.classList.add("show");
+            }
 
-i++;
-setTimeout(typing,80);
+        });
 
-}
+    });
 
-}
+    document.querySelectorAll(".fade").forEach(el => {
+        observer.observe(el);
+    });
 
-typing();
+    const bg = document.getElementById("interactive-bg");
 
+    const canvas = document.createElement("canvas");
 
+    bg.appendChild(canvas);
 
-const observer = new IntersectionObserver(entries=>{
+    const ctx = canvas.getContext("2d");
 
-entries.forEach(entry=>{
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
 
-if(entry.isIntersecting){
-entry.target.classList.add("show");
-}
+    let particles = [];
 
-});
+    const total = 90;
 
-});
+    class Particle {
 
-document.querySelectorAll(".fade").forEach(el=>{
-observer.observe(el);
-});
+        constructor() {
 
-/* FUNDO PARTÍCULAS */
+            this.x = Math.random() * canvas.width;
+            this.y = Math.random() * canvas.height;
 
-const bg = document.getElementById("interactive-bg");
+            this.vx = (Math.random() - 0.5) * 0.4;
+            this.vy = (Math.random() - 0.5) * 0.4;
 
-const canvas = document.createElement("canvas");
+            this.size = 2;
 
-bg.appendChild(canvas);
+        }
 
-const ctx = canvas.getContext("2d");
+        move() {
 
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+            this.x += this.vx;
+            this.y += this.vy;
 
-let particles = [];
+            if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+            if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
 
-const total = 90;
+        }
 
-class Particle{
+        draw() {
 
-constructor(){
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+            ctx.fillStyle = "white";
+            ctx.fill();
 
-this.x = Math.random()*canvas.width;
-this.y = Math.random()*canvas.height;
+        }
 
-this.vx = (Math.random()-0.5)*0.4;
-this.vy = (Math.random()-0.5)*0.4;
+    }
 
-this.size = 2;
+    for (let i = 0; i < total; i++) {
+        particles.push(new Particle());
+    }
 
-}
+    function connect() {
 
-move(){
+        for (let a = 0; a < particles.length; a++) {
 
-this.x += this.vx;
-this.y += this.vy;
+            for (let b = a; b < particles.length; b++) {
 
-if(this.x<0||this.x>canvas.width) this.vx*=-1;
-if(this.y<0||this.y>canvas.height) this.vy*=-1;
+                let dx = particles[a].x - particles[b].x;
+                let dy = particles[a].y - particles[b].y;
 
-}
+                let dist = Math.sqrt(dx * dx + dy * dy);
 
-draw(){
+                if (dist < 120) {
 
-ctx.beginPath();
-ctx.arc(this.x,this.y,this.size,0,Math.PI*2);
-ctx.fillStyle="white";
-ctx.fill();
+                    ctx.beginPath();
 
-}
+                    ctx.strokeStyle = "rgba(80,150,255,0.4)";
+                    ctx.lineWidth = 1;
 
-}
+                    ctx.moveTo(particles[a].x, particles[a].y);
+                    ctx.lineTo(particles[b].x, particles[b].y);
 
-for(let i=0;i<total;i++){
+                    ctx.stroke();
 
-particles.push(new Particle());
+                }
 
-}
+            }
 
-function connect(){
+        }
 
-for(let a=0;a<particles.length;a++){
+    }
 
-for(let b=a;b<particles.length;b++){
+    function animate() {
 
-let dx = particles[a].x - particles[b].x;
-let dy = particles[a].y - particles[b].y;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-let dist = Math.sqrt(dx*dx + dy*dy);
+        particles.forEach(p => {
 
-if(dist < 120){
+            p.move();
+            p.draw();
 
-ctx.beginPath();
+        });
 
-ctx.strokeStyle="rgba(80,150,255,0.4)";
-ctx.lineWidth=1;
+        connect();
 
-ctx.moveTo(particles[a].x,particles[a].y);
-ctx.lineTo(particles[b].x,particles[b].y);
+        requestAnimationFrame(animate);
 
-ctx.stroke();
+    }
 
-}
+    animate();
 
-}
+    window.addEventListener("resize", () => {
 
-}
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
 
-}
-
-function animate(){
-
-ctx.clearRect(0,0,canvas.width,canvas.height);
-
-particles.forEach(p=>{
-
-p.move();
-p.draw();
-
-});
-
-connect();
-
-requestAnimationFrame(animate);
-
-}
-
-animate();
-
-window.addEventListener("resize",()=>{
-
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
-
-});
+    });
 
 });
